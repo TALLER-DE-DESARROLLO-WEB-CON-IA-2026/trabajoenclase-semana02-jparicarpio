@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TechStore Perú — Computadoras & Tecnología</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0b0f1a;
+  --navy2:#111827;
+  --navy3:#1a2235;
+  --navy4:#222d42;
+  --blue:#4f8ef7;
+  --blue2:#7eb3fc;
+  --cyan:#00d4ff;
+  --white:#eef2ff;
+  --gray:#8892a4;
+  --gray2:#b8c4d8;
+  --border:rgba(79,142,247,0.18);
+  --fh:'Syne',sans-serif;
+  --fb:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--white);font-family:var(--fb);line-height:1.65;overflow-x:hidden}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--navy)}
+::-webkit-scrollbar-thumb{background:var(--navy4);border-radius:3px}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(11,15,26,0.9);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 4rem;height:68px;
+}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-box{
+  width:40px;height:40px;border-radius:10px;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:700;color:#fff;font-family:var(--fh);
+}
+.logo-text{font-family:var(--fh);font-size:20px;font-weight:800;color:var(--white);letter-spacing:-0.5px}
+.logo-text span{color:var(--blue2)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{color:var(--gray2);font-size:14px;text-decoration:none;font-weight:400;transition:color .2s;letter-spacing:.2px}
+.nav-links a:hover{color:var(--white)}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-search{
+  background:var(--navy3);border:1px solid var(--border);
+  color:var(--gray2);padding:8px 16px;border-radius:8px;
+  font-size:13px;font-family:var(--fb);cursor:pointer;transition:border-color .2s;
+}
+.nav-search:hover{border-color:var(--blue)}
+.nav-cta{
+  background:var(--blue);color:#fff;border:none;
+  padding:10px 20px;border-radius:8px;
+  font-size:14px;font-weight:600;font-family:var(--fb);cursor:pointer;
+  transition:opacity .2s,transform .15s;
+}
+.nav-cta:hover{opacity:.88;transform:translateY(-1px)}
+
+/* ── HERO ── */
+.hero{
+  position:relative;overflow:hidden;
+  min-height:92vh;display:flex;align-items:center;
+  padding:5rem 4rem;
+  background:var(--navy);
+  text-align:center;justify-content:center;
+  flex-direction:column;
+}
+.hero-bg{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 20%,rgba(79,142,247,0.13) 0%,transparent 65%),
+    radial-gradient(ellipse 50% 50% at 80% 80%,rgba(0,212,255,0.07) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 40% at 10% 70%,rgba(79,142,247,0.06) 0%,transparent 55%);
+}
+.hero-grid{
+  position:absolute;inset:0;pointer-events:none;opacity:.035;
+  background-image:linear-gradient(var(--blue) 1px,transparent 1px),linear-gradient(90deg,var(--blue) 1px,transparent 1px);
+  background-size:64px 64px;
+}
+.hero-inner{position:relative;max-width:800px;margin:0 auto}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.3);
+  color:var(--blue2);font-size:13px;padding:6px 18px;
+  border-radius:100px;margin-bottom:2rem;font-weight:500;letter-spacing:.3px;
+}
+.badge-pulse{width:7px;height:7px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.hero h1{
+  font-family:var(--fh);font-size:clamp(42px,6vw,72px);
+  font-weight:800;line-height:1.05;letter-spacing:-2.5px;
+  color:var(--white);margin-bottom:1.5rem;
+}
+.hero h1 .grad{
+  background:linear-gradient(90deg,var(--blue) 0%,var(--cyan) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{
+  font-size:18px;color:var(--gray);font-weight:300;
+  margin:0 auto 2.5rem;max-width:560px;line-height:1.75;
+}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem}
+.btn-primary{
+  background:var(--blue);color:#fff;border:none;
+  padding:15px 32px;border-radius:10px;font-size:16px;
+  font-weight:600;font-family:var(--fb);cursor:pointer;
+  transition:opacity .2s,transform .15s;letter-spacing:.2px;
+}
+.btn-primary:hover{opacity:.87;transform:translateY(-2px)}
+.btn-outline{
+  background:transparent;color:var(--gray2);
+  border:1px solid rgba(255,255,255,0.18);
+  padding:15px 32px;border-radius:10px;font-size:16px;
+  font-family:var(--fb);cursor:pointer;
+  transition:border-color .2s,color .2s;
+}
+.btn-outline:hover{border-color:rgba(255,255,255,0.38);color:var(--white)}
+.hero-stats{
+  display:flex;gap:0;justify-content:center;
+  border:1px solid var(--border);border-radius:14px;
+  overflow:hidden;background:rgba(255,255,255,0.02);
+  max-width:620px;margin:0 auto;
+}
+.stat-item{
+  flex:1;padding:1.25rem 1rem;text-align:center;
+  border-right:1px solid var(--border);
+}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:var(--fh);font-size:26px;font-weight:800;color:var(--white);line-height:1}
+.stat-label{font-size:12px;color:var(--gray);margin-top:5px;letter-spacing:.2px}
+
+/* ── BRANDS ── */
+.brands{
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:1.75rem 4rem;text-align:center;
+  background:rgba(255,255,255,0.01);
+}
+.brands-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:1.25rem;display:block}
+.brands-list{display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;align-items:center}
+.brand{font-family:var(--fh);font-size:16px;font-weight:700;color:var(--gray);opacity:.45;letter-spacing:-0.5px;transition:opacity .25s;cursor:default}
+.brand:hover{opacity:.9}
+
+/* ── SECTION BASE ── */
+.section{padding:5rem 4rem;text-align:center}
+.sec-label{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--blue2);margin-bottom:10px;font-weight:600;display:block}
+.sec-title{font-family:var(--fh);font-size:clamp(28px,3.5vw,42px);font-weight:800;letter-spacing:-1px;color:var(--white);margin-bottom:10px;line-height:1.1}
+.sec-sub{font-size:16px;color:var(--gray);max-width:520px;margin:0 auto;line-height:1.7}
+
+/* ── PRODUCTS ── */
+.products-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;margin-top:3rem;
+  max-width:1200px;margin-left:auto;margin-right:auto;
+}
+.product-card{
+  background:var(--navy2);border-radius:18px;
+  border:1px solid var(--border);overflow:hidden;
+  transition:transform .25s,border-color .25s;
+  cursor:pointer;text-align:left;
+}
+.product-card:hover{transform:translateY(-6px);border-color:rgba(79,142,247,0.45)}
+.product-img{
+  width:100%;height:220px;object-fit:cover;
+  display:block;filter:brightness(.92);
+  transition:filter .3s;
+}
+.product-card:hover .product-img{filter:brightness(1)}
+.product-body{padding:1.5rem}
+.p-badges{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap}
+.p-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:5px;letter-spacing:.3px}
+.badge-hot{background:rgba(255,90,50,0.14);color:#ff7a5a}
+.badge-new{background:rgba(79,142,247,0.14);color:var(--blue2)}
+.badge-sale{background:rgba(0,200,100,0.14);color:#40d890}
+.badge-stock{background:rgba(255,255,255,0.06);color:var(--gray2)}
+.p-name{font-family:var(--fh);font-size:18px;font-weight:700;color:var(--white);margin-bottom:6px;line-height:1.2}
+.p-spec{font-size:13px;color:var(--gray);line-height:1.65;margin-bottom:1.25rem}
+.p-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.p-prices{}
+.p-price{font-family:var(--fh);font-size:22px;font-weight:800;color:var(--blue2)}
+.p-old{font-size:13px;color:var(--gray);text-decoration:line-through;margin-left:6px}
+.p-btn{
+  background:transparent;color:var(--blue2);
+  border:1px solid rgba(79,142,247,0.4);
+  padding:9px 18px;border-radius:8px;
+  font-size:13px;font-weight:600;font-family:var(--fb);
+  cursor:pointer;white-space:nowrap;
+  transition:background .2s,border-color .2s;
+}
+.p-btn:hover{background:rgba(79,142,247,0.12);border-color:var(--blue)}
+
+/* ── CATEGORIES ── */
+.categories-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1rem;margin-top:2.5rem;max-width:1100px;margin-left:auto;margin-right:auto;
+}
+.cat-card{
+  background:var(--navy2);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;cursor:pointer;
+  transition:transform .2s,border-color .2s;position:relative;
+}
+.cat-card:hover{transform:translateY(-4px);border-color:rgba(79,142,247,0.4)}
+.cat-img{width:100%;height:160px;object-fit:cover;display:block;filter:brightness(.75);transition:filter .3s}
+.cat-card:hover .cat-img{filter:brightness(.9)}
+.cat-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(11,15,26,.85) 0%,transparent 55%);
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:flex-end;padding:1.25rem;text-align:center;
+}
+.cat-name{font-family:var(--fh);font-size:16px;font-weight:700;color:#fff}
+.cat-count{font-size:12px;color:rgba(255,255,255,.55);margin-top:3px}
+
+/* ── WHY + REVIEWS ── */
+.split-section{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1.5rem;max-width:1200px;margin:3rem auto 0;
+}
+.panel{
+  background:var(--navy2);border-radius:20px;
+  border:1px solid var(--border);padding:2.5rem;
+  text-align:left;
+}
+.panel-title{font-family:var(--fh);font-size:24px;font-weight:700;color:var(--white);margin-bottom:6px}
+.panel-sub{font-size:14px;color:var(--gray);margin-bottom:2rem;line-height:1.65}
+.why-items{display:flex;flex-direction:column;gap:1.5rem}
+.why-item{display:flex;gap:16px;align-items:flex-start}
+.why-icon-box{
+  width:50px;height:50px;border-radius:13px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;border:1px solid var(--border);
+  background:rgba(79,142,247,0.08);
+}
+.why-text-title{font-family:var(--fh);font-size:15px;font-weight:700;color:var(--white);margin-bottom:5px}
+.why-text-desc{font-size:13px;color:var(--gray);line-height:1.65}
+
+/* reviews */
+.r-summary{display:flex;align-items:center;gap:1.5rem;margin-bottom:1.75rem;padding-bottom:1.75rem;border-bottom:1px solid var(--border)}
+.r-big-score{font-family:var(--fh);font-size:56px;font-weight:800;color:var(--white);line-height:1}
+.r-stars-big{color:#f5c518;font-size:22px;margin-bottom:5px;letter-spacing:2px}
+.r-total{font-size:13px;color:var(--gray)}
+.r-bars{flex:1;display:flex;flex-direction:column;gap:6px}
+.r-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--gray)}
+.r-track{flex:1;height:5px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden}
+.r-fill{height:100%;background:#f5c518;border-radius:3px}
+.reviews-list{display:flex;flex-direction:column;gap:1.5rem}
+.r-item{border-bottom:1px solid var(--border);padding-bottom:1.5rem}
+.r-item:last-child{border-bottom:none;padding-bottom:0}
+.r-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.r-av{width:38px;height:38px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;font-family:var(--fh)}
+.av1{background:rgba(79,142,247,0.18);color:var(--blue2)}
+.av2{background:rgba(0,200,100,0.14);color:#40d890}
+.av3{background:rgba(255,160,60,0.14);color:#ffa040}
+.av4{background:rgba(200,100,255,0.14);color:#c864ff}
+.r-name{font-size:14px;font-weight:600;color:var(--white)}
+.r-stars-sm{color:#f5c518;font-size:12px;letter-spacing:1px}
+.r-date{font-size:12px;color:var(--gray);margin-left:auto}
+.r-body{font-size:13px;color:var(--gray2);line-height:1.65}
+
+/* ── PROMO BANNER ── */
+.promo{
+  position:relative;overflow:hidden;
+  background:linear-gradient(120deg,#0a1628 0%,#0d1f45 50%,#0a2a5a 100%);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:4rem;text-align:center;
+}
+.promo-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;opacity:.12;filter:saturate(0);
+}
+.promo-inner{position:relative;max-width:650px;margin:0 auto}
+.promo h2{font-family:var(--fh);font-size:clamp(28px,4vw,46px);font-weight:800;letter-spacing:-1.5px;color:var(--white);margin-bottom:.75rem;line-height:1.1}
+.promo h2 span{background:linear-gradient(90deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.promo p{font-size:16px;color:var(--gray);margin-bottom:2rem;line-height:1.7}
+.promo-timer{display:flex;gap:1rem;justify-content:center;margin-bottom:2rem;flex-wrap:wrap}
+.timer-box{
+  background:rgba(255,255,255,0.06);border:1px solid var(--border);
+  border-radius:10px;padding:.75rem 1.25rem;min-width:72px;text-align:center;
+}
+.timer-num{font-family:var(--fh);font-size:28px;font-weight:800;color:var(--white);line-height:1}
+.timer-lbl{font-size:11px;color:var(--gray);letter-spacing:1px;margin-top:3px}
+
+/* ── FEATURES STRIP ── */
+.features{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;border-top:1px solid var(--border);
+  background:var(--navy2);
+}
+.feat{
+  padding:2rem;text-align:center;
+  border-right:1px solid var(--border);
+}
+.feat:last-child{border-right:none}
+.feat-icon{font-size:36px;margin-bottom:1rem;display:block}
+.feat-title{font-family:var(--fh);font-size:15px;font-weight:700;color:var(--white);margin-bottom:5px}
+.feat-desc{font-size:13px;color:var(--gray);line-height:1.6}
+
+/* ── CONTACT ── */
+.contact-section{
+  background:var(--navy2);border-top:1px solid var(--border);
+  padding:5rem 4rem;text-align:center;
+}
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:3rem;align-items:start;max-width:1100px;
+  margin:3rem auto 0;text-align:left;
+}
+.c-detail{display:flex;align-items:flex-start;gap:14px;margin-bottom:1.5rem}
+.c-icon-box{
+  width:44px;height:44px;border-radius:11px;flex-shrink:0;
+  background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.22);
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.c-main{font-size:15px;font-weight:600;color:var(--white);margin-bottom:3px}
+.c-sub{font-size:13px;color:var(--gray);line-height:1.55}
+.contact-map{
+  width:100%;height:220px;border-radius:14px;overflow:hidden;
+  border:1px solid var(--border);margin-top:1.5rem;background:var(--navy3);
+  display:flex;align-items:center;justify-content:center;
+}
+.map-placeholder{text-align:center}
+.map-img{width:100%;height:220px;object-fit:cover;border-radius:14px;display:block;filter:saturate(.2) brightness(.7)}
+.form-box{
+  background:var(--navy);border:1px solid var(--border);
+  border-radius:20px;padding:2.5rem;
+}
+.form-title{font-family:var(--fh);font-size:22px;font-weight:700;color:var(--white);margin-bottom:1.5rem}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f-group{margin-bottom:14px}
+.f-label{font-size:12px;color:var(--gray);margin-bottom:5px;display:block;letter-spacing:.4px;font-weight:500}
+.f-input{
+  width:100%;background:var(--navy2);
+  border:1px solid rgba(255,255,255,0.09);
+  border-radius:9px;padding:12px 15px;
+  font-size:14px;font-family:var(--fb);color:var(--white);outline:none;
+  transition:border-color .2s;
+}
+.f-input:focus{border-color:rgba(79,142,247,0.55)}
+.f-input::placeholder{color:rgba(136,146,164,0.45)}
+textarea.f-input{resize:none;line-height:1.65}
+.f-submit{
+  width:100%;background:var(--blue);color:#fff;border:none;
+  padding:14px;border-radius:10px;font-size:15px;font-weight:600;
+  font-family:var(--fb);cursor:pointer;margin-top:4px;letter-spacing:.2px;
+  transition:opacity .2s,transform .15s;
+}
+.f-submit:hover{opacity:.87;transform:translateY(-1px)}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--navy);border-top:1px solid var(--border);
+  padding:3rem 4rem 2rem;
+}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem}
+.footer-brand .logo-text{font-size:22px;margin-bottom:.75rem;display:block}
+.footer-brand p{font-size:13px;color:var(--gray);line-height:1.7;max-width:260px}
+.footer-col h4{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--white);margin-bottom:1rem;letter-spacing:.3px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.footer-col ul li a{font-size:13px;color:var(--gray);text-decoration:none;transition:color .2s}
+.footer-col ul li a:hover{color:var(--white)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-size:13px;color:rgba(136,146,164,.45)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-size:13px;color:var(--gray);text-decoration:none}
+.footer-links a:hover{color:var(--white)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1000px){
+  nav{padding:0 2rem}
+  .nav-links{display:none}
+  .section{padding:4rem 2rem}
+  .brands{padding:1.5rem 2rem}
+  .products-grid{grid-template-columns:1fr 1fr}
+  .categories-grid{grid-template-columns:1fr 1fr}
+  .split-section{grid-template-columns:1fr}
+  .features{grid-template-columns:1fr 1fr}
+  .feat{border-bottom:1px solid var(--border)}
+  .contact-section{padding:4rem 2rem}
+  .contact-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr;gap:2rem}
+  footer{padding:2.5rem 2rem 1.5rem}
+  .promo{padding:3rem 2rem}
+  .hero{padding:4rem 2rem}
+}
+@media(max-width:600px){
+  .products-grid{grid-template-columns:1fr}
+  .categories-grid{grid-template-columns:1fr 1fr}
+  .features{grid-template-columns:1fr}
+  .feat{border-right:none}
+  .f-row{grid-template-columns:1fr}
+  .hero-stats{flex-direction:column;border-radius:10px}
+  .stat-item{border-right:none;border-bottom:1px solid var(--border)}
+  .stat-item:last-child{border-bottom:none}
+  .promo-timer{gap:.6rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-box">T</div>
+    <span class="logo-text">Tech<span>Store</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Inicio</a></li>
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#categorias">Categorías</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-search">Buscar equipos...</button>
+    <button class="nav-cta">Ver carrito (0)</button>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <div class="badge-pulse"></div>
+      Distribuidores autorizados — Lima, Perú
+    </div>
+    <h1>El poder de la<br><span class="grad">tecnología real</span><br>en tus manos.</h1>
+    <p class="hero-sub">
+      Laptops, desktops, workstations y accesorios premium de las marcas líderes del mundo.
+      Garantía oficial, financiamiento sin intereses y envío a todo el Perú en 48 horas.
+    </p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">Explorar catálogo &rarr;</button>
+      <button class="btn-outline" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Asesoría gratuita</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">10,000+</div>
+        <div class="stat-label">Productos en stock</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">12 años</div>
+        <div class="stat-label">En el mercado peruano</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4.9 / 5</div>
+        <div class="stat-label">Calificación verificada</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">48 h</div>
+        <div class="stat-label">Entrega en Lima</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BRANDS ══ -->
+<div class="brands">
+  <span class="brands-label">Marcas oficiales con garantía de fábrica</span>
+  <div class="brands-list">
+    <span class="brand">Apple</span>
+    <span class="brand">Dell</span>
+    <span class="brand">HP</span>
+    <span class="brand">Lenovo</span>
+    <span class="brand">Asus</span>
+    <span class="brand">Microsoft</span>
+    <span class="brand">Samsung</span>
+    <span class="brand">Acer</span>
+  </div>
+</div>
+
+<!-- ══ CATEGORIES ══ -->
+<section class="section" id="categorias">
+  <span class="sec-label">Explora por categoría</span>
+  <div class="sec-title">Encuentra tu equipo ideal</div>
+  <p class="sec-sub">Desde ultrabooks ultradelgadas hasta potentes workstations para profesionales creativos.</p>
+  <div class="categories-grid">
+    <div class="cat-card">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600&auto=format&fit=crop" alt="Laptops" loading="lazy"/>
+      <div class="cat-overlay">
+        <div class="cat-name">Laptops</div>
+        <div class="cat-count">+340 modelos</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1593640408182-31c228fa73af?w=600&auto=format&fit=crop" alt="Desktops" loading="lazy"/>
+      <div class="cat-overlay">
+        <div class="cat-name">Desktops</div>
+        <div class="cat-count">+180 modelos</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&auto=format&fit=crop" alt="MacBooks" loading="lazy"/>
+      <div class="cat-overlay">
+        <div class="cat-name">MacBooks</div>
+        <div class="cat-count">+60 modelos</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&auto=format&fit=crop" alt="Accesorios" loading="lazy"/>
+      <div class="cat-overlay">
+        <div class="cat-name">Accesorios</div>
+        <div class="cat-count">+820 productos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRODUCTS ══ -->
+<section class="section" id="productos" style="padding-top:0">
+  <span class="sec-label">Más vendidos esta semana</span>
+  <div class="sec-title">Equipos destacados</div>
+  <p class="sec-sub">Selección curada de los mejores equipos con precio competitivo y garantía oficial de fábrica.</p>
+  <div class="products-grid">
+
+    <div class="product-card">
+      <img class="product-img" src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=700&auto=format&fit=crop" alt="Dell XPS 15" loading="lazy"/>
+      <div class="product-body">
+        <div class="p-badges">
+          <span class="p-badge badge-hot">Más vendido</span>
+          <span class="p-badge badge-stock">En stock</span>
+        </div>
+        <div class="p-name">Dell XPS 15 OLED 2024</div>
+        <div class="p-spec">Intel Core i7-13700H &middot; 16 GB DDR5 &middot; 512 GB NVMe &middot; NVIDIA RTX 4060 &middot; Pantalla OLED 4K 120 Hz</div>
+        <div class="p-footer">
+          <div class="p-prices">
+            <span class="p-price">S/ 6,499</span>
+            <span class="p-old">S/ 7,200</span>
+          </div>
+          <button class="p-btn">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img class="product-img" src="https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=700&auto=format&fit=crop" alt="MacBook Pro M3" loading="lazy"/>
+      <div class="product-body">
+        <div class="p-badges">
+          <span class="p-badge badge-new">Nuevo 2024</span>
+          <span class="p-badge badge-stock">En stock</span>
+        </div>
+        <div class="p-name">MacBook Pro 14" M3 Pro</div>
+        <div class="p-spec">Apple M3 Pro 12 núcleos &middot; 18 GB RAM unificada &middot; 512 GB SSD &middot; Liquid Retina XDR &middot; Autonomía 22 h</div>
+        <div class="p-footer">
+          <div class="p-prices">
+            <span class="p-price">S/ 12,990</span>
+          </div>
+          <button class="p-btn">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img class="product-img" src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=700&auto=format&fit=crop" alt="HP Victus Gaming" loading="lazy"/>
+      <div class="product-body">
+        <div class="p-badges">
+          <span class="p-badge badge-sale">Oferta &minus;12%</span>
+          <span class="p-badge badge-stock">En stock</span>
+        </div>
+        <div class="p-name">HP Victus 16 Gaming</div>
+        <div class="p-spec">AMD Ryzen 7 7745HX &middot; 32 GB DDR5 &middot; 1 TB SSD &middot; NVIDIA RTX 4070 &middot; Display 144 Hz FHD</div>
+        <div class="p-footer">
+          <div class="p-prices">
+            <span class="p-price">S/ 5,299</span>
+            <span class="p-old">S/ 5,999</span>
+          </div>
+          <button class="p-btn">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img class="product-img" src="https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=700&auto=format&fit=crop" alt="Lenovo ThinkPad" loading="lazy"/>
+      <div class="product-body">
+        <div class="p-badges">
+          <span class="p-badge badge-new">Profesional</span>
+        </div>
+        <div class="p-name">Lenovo ThinkPad X1 Carbon</div>
+        <div class="p-spec">Intel Core Ultra 7 165H &middot; 32 GB LPDDR5 &middot; 1 TB SSD &middot; Pantalla IPS 2.8K OLED &middot; Peso 1.12 kg</div>
+        <div class="p-footer">
+          <div class="p-prices">
+            <span class="p-price">S/ 8,799</span>
+          </div>
+          <button class="p-btn">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img class="product-img" src="https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=700&auto=format&fit=crop" alt="Asus ROG" loading="lazy"/>
+      <div class="product-body">
+        <div class="p-badges">
+          <span class="p-badge badge-hot">Gaming</span>
+          <span class="p-badge badge-sale">Oferta</span>
+        </div>
+        <div class="p-name">Asus ROG Strix G16</div>
+        <div class="p-spec">Intel Core i9-14900HX &middot; 32 GB DDR5 &middot; 1 TB SSD &middot; NVIDIA RTX 4080 &middot; Display 240 Hz QHD</div>
+        <div class="p-footer">
+          <div class="p-prices">
+            <span class="p-price">S/ 9,499</span>
+            <span class="p-old">S/ 10,500</span>
+          </div>
+          <button class="p-btn">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img class="product-img" src="https://images.unsplash.com/photo-1625842268584-8f3296236761?w=700&auto=format&fit=crop" alt="Desktop Gaming" loading="lazy"/>
+      <div class="product-body">
+        <div class="p-badges">
+          <span class="p-badge badge-new">Desktop</span>
+          <span class="p-badge badge-stock">En stock</span>
+        </div>
+        <div class="p-name">PC Gaming TechStore PRO</div>
+        <div class="p-spec">AMD Ryzen 9 7950X &middot; 64 GB DDR5 &middot; 2 TB NVMe &middot; NVIDIA RTX 4090 &middot; Ensamblado en Lima</div>
+        <div class="p-footer">
+          <div class="p-prices">
+            <span class="p-price">S/ 18,990</span>
+          </div>
+          <button class="p-btn">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ PROMO BANNER ══ -->
+<div class="promo">
+  <img class="promo-img" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1400&auto=format&fit=crop" alt="Tecnología" loading="lazy"/>
+  <div class="promo-inner">
+    <span class="sec-label">Oferta por tiempo limitado</span>
+    <h2>Hasta <span>40% de descuento</span><br>en laptops seleccionadas</h2>
+    <p>No dejes pasar esta oportunidad. Financiamiento sin intereses hasta en 12 cuotas con todas las tarjetas del mercado peruano.</p>
+    <div class="promo-timer">
+      <div class="timer-box"><div class="timer-num" id="days">02</div><div class="timer-lbl">DÍAS</div></div>
+      <div class="timer-box"><div class="timer-num" id="hours">14</div><div class="timer-lbl">HORAS</div></div>
+      <div class="timer-box"><div class="timer-num" id="mins">38</div><div class="timer-lbl">MIN</div></div>
+      <div class="timer-box"><div class="timer-num" id="secs">00</div><div class="timer-lbl">SEG</div></div>
+    </div>
+    <button class="btn-primary" style="font-size:15px;padding:14px 36px">Ver ofertas &rarr;</button>
+  </div>
+</div>
+
+<!-- ══ FEATURES ══ -->
+<div class="features">
+  <div class="feat">
+    <span class="feat-icon">&#128666;</span>
+    <div class="feat-title">Envío gratis a Lima</div>
+    <div class="feat-desc">En compras mayores a S/ 500. Entregas en 24 a 48 horas hábiles con seguimiento en tiempo real.</div>
+  </div>
+  <div class="feat">
+    <span class="feat-icon">&#128737;</span>
+    <div class="feat-title">Garantía oficial</div>
+    <div class="feat-desc">Todos los equipos cuentan con garantía directa del fabricante. Somos distribuidores autorizados.</div>
+  </div>
+  <div class="feat">
+    <span class="feat-icon">&#128179;</span>
+    <div class="feat-title">Financiamiento 0%</div>
+    <div class="feat-desc">Hasta 12 cuotas sin intereses con Visa, Mastercard y American Express de todos los bancos peruanos.</div>
+  </div>
+  <div class="feat">
+    <span class="feat-icon">&#128241;</span>
+    <div class="feat-title">Soporte 24/7</div>
+    <div class="feat-desc">Ingenieros certificados disponibles por WhatsApp, llamada y videollamada todos los días del año.</div>
+  </div>
+</div>
+
+<!-- ══ WHY + REVIEWS ══ -->
+<section class="section" id="nosotros">
+  <span class="sec-label">Por qué elegirnos</span>
+  <div class="sec-title">Más que una tienda de computadoras</div>
+  <p class="sec-sub">En TechStore Perú no solo vendemos equipos; te acompañamos en cada etapa, desde la elección hasta el soporte posventa.</p>
+  <div class="split-section">
+
+    <div class="panel">
+      <div class="panel-title">Nuestros compromisos</div>
+      <div class="panel-sub">Doce años construyendo confianza en el mercado tecnológico peruano.</div>
+      <div class="why-items">
+        <div class="why-item">
+          <div class="why-icon-box">&#128737;</div>
+          <div>
+            <div class="why-text-title">Garantía oficial de fábrica</div>
+            <div class="why-text-desc">Somos importadores directos y distribuidores autorizados de Apple, Dell, HP, Lenovo y Asus en Perú. Tu garantía es 100% válida y se gestiona con el fabricante, no con intermediarios.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon-box">&#128666;</div>
+          <div>
+            <div class="why-text-title">Logística propia en todo el Perú</div>
+            <div class="why-text-desc">Contamos con flota propia para Lima y alianzas certificadas para envíos a las 25 regiones del país. Cada paquete va asegurado y con seguimiento GPS en tiempo real.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon-box">&#128104;&#8205;&#128187;</div>
+          <div>
+            <div class="why-text-title">Técnicos certificados en tienda</div>
+            <div class="why-text-desc">Nuestro equipo de ingenieros con certificaciones Apple, Dell Pro y Microsoft te asesora antes de comprar y resuelve cualquier problema posventa sin costo adicional.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon-box">&#128260;</div>
+          <div>
+            <div class="why-text-title">Política de cambio flexible</div>
+            <div class="why-text-desc">30 días para cambiar tu equipo si no cumple tus expectativas. Sin preguntas, sin burocracia. Queremos que estés 100% satisfecho con tu compra.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Lo que dicen nuestros clientes</div>
+      <div class="panel-sub">Más de 6,400 reseñas verificadas en Google y Trustpilot.</div>
+      <div class="r-summary">
+        <div>
+          <div class="r-big-score">4.9</div>
+          <div class="r-stars-big">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="r-total">6,418 reseñas verificadas</div>
+        </div>
+        <div class="r-bars">
+          <div class="r-row"><span style="width:18px">5&#9733;</span><div class="r-track"><div class="r-fill" style="width:93%"></div></div><span>93%</span></div>
+          <div class="r-row"><span style="width:18px">4&#9733;</span><div class="r-track"><div class="r-fill" style="width:5%"></div></div><span>5%</span></div>
+          <div class="r-row"><span style="width:18px">3&#9733;</span><div class="r-track"><div class="r-fill" style="width:1.5%;background:#555"></div></div><span>1.5%</span></div>
+          <div class="r-row"><span style="width:18px">2&#9733;</span><div class="r-track"><div class="r-fill" style="width:.5%;background:#555"></div></div><span>0.5%</span></div>
+        </div>
+      </div>
+      <div class="reviews-list">
+        <div class="r-item">
+          <div class="r-head">
+            <div class="r-av av1">CM</div>
+            <div><div class="r-name">Carlos Mendoza</div><div class="r-stars-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
+            <span class="r-date">hace 3 días</span>
+          </div>
+          <div class="r-body">Compré el MacBook Pro M3 y llegó perfectamente embalado antes de lo prometido. El asesor me ayudó a elegir la configuración correcta para mi trabajo de diseño 3D. Definitivamente la mejor experiencia de compra de tecnología que he tenido en Lima.</div>
+        </div>
+        <div class="r-item">
+          <div class="r-head">
+            <div class="r-av av2">LP</div>
+            <div><div class="r-name">Lucía Paredes</div><div class="r-stars-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
+            <span class="r-date">hace 1 semana</span>
+          </div>
+          <div class="r-body">Precios muy por debajo del mercado con garantía oficial real. Me instalaron Windows, migraron mis datos y me explicaron todo el funcionamiento del equipo nuevo. El servicio posventa es excepcional.</div>
+        </div>
+        <div class="r-item">
+          <div class="r-head">
+            <div class="r-av av3">RG</div>
+            <div><div class="r-name">Roberto Gutiérrez</div><div class="r-stars-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
+            <span class="r-date">hace 2 semanas</span>
+          </div>
+          <div class="r-body">Pedí desde Arequipa y llegó en solo 4 días con seguro incluido. El Asus ROG llegó en perfectas condiciones. Cuando tuve una duda técnica me respondieron por WhatsApp en menos de 10 minutos. Increíble.</div>
+        </div>
+        <div class="r-item">
+          <div class="r-head">
+            <div class="r-av av4">VT</div>
+            <div><div class="r-name">Valentina Torres</div><div class="r-stars-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
+            <span class="r-date">hace 3 semanas</span>
+          </div>
+          <div class="r-body">Compré el ThinkPad X1 para mi empresa y gestionaron la factura con RUC sin ningún problema. El equipo de ventas corporativas conoce perfectamente los requerimientos empresariales. Los seguiré eligiendo.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section class="contact-section" id="contacto">
+  <span class="sec-label">Estamos aquí para ti</span>
+  <div class="sec-title">Contáctanos</div>
+  <p class="sec-sub">Nuestro equipo de especialistas está listo para asesorarte y ayudarte a encontrar el equipo perfecto para tus necesidades y presupuesto.</p>
+  <div class="contact-grid">
+    <div>
+      <div class="c-detail">
+        <div class="c-icon-box">&#128205;</div>
+        <div>
+          <div class="c-main">Av. Javier Prado Este 4200, San Isidro</div>
+          <div class="c-sub">Lima, Perú &middot; Lunes a Sábado de 9:00 am a 7:00 pm &middot; Domingos de 10:00 am a 2:00 pm</div>
+        </div>
+      </div>
+      <div class="c-detail">
+        <div class="c-icon-box">&#128172;</div>
+        <div>
+          <div class="c-main">+51 987 654 321</div>
+          <div class="c-sub">WhatsApp Business disponible las 24 horas, los 7 días de la semana</div>
+        </div>
+      </div>
+      <div class="c-detail">
+        <div class="c-icon-box">&#9993;</div>
+        <div>
+          <div class="c-main">ventas@techstore.com.pe</div>
+          <div class="c-sub">Respondemos en menos de 2 horas en horario de oficina. Cotizaciones corporativas con RUC.</div>
+        </div>
+      </div>
+      <div class="c-detail">
+        <div class="c-icon-box">&#128222;</div>
+        <div>
+          <div class="c-main">(01) 234-5678</div>
+          <div class="c-sub">Línea directa en Lima &middot; Soporte técnico y ventas corporativas</div>
+        </div>
+      </div>
+      <img class="map-img" src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&auto=format&fit=crop" alt="Lima Perú" loading="lazy"/>
+    </div>
+    <div class="form-box">
+      <div class="form-title">Solicita asesoría gratuita</div>
+      <div class="f-row">
+        <div class="f-group">
+          <label class="f-label">Nombre</label>
+          <input class="f-input" type="text" placeholder="Tu nombre"/>
+        </div>
+        <div class="f-group">
+          <label class="f-label">Apellido</label>
+          <input class="f-input" type="text" placeholder="Tu apellido"/>
+        </div>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Correo electrónico</label>
+        <input class="f-input" type="email" placeholder="tu@correo.com"/>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Teléfono / WhatsApp</label>
+        <input class="f-input" type="tel" placeholder="+51 9XX XXX XXX"/>
+      </div>
+      <div class="f-group">
+        <label class="f-label">¿Qué equipo estás buscando?</label>
+        <input class="f-input" type="text" placeholder="Ej: Laptop para diseño gráfico con presupuesto de S/ 5,000"/>
+      </div>
+      <div class="f-group">
+        <label class="f-label">¿Cómo prefieres que te contactemos?</label>
+        <select class="f-input">
+          <option value="" disabled selected>Selecciona una opción</option>
+          <option>WhatsApp</option>
+          <option>Llamada telefónica</option>
+          <option>Correo electrónico</option>
+          <option>Visita a tienda</option>
+        </select>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Mensaje adicional</label>
+        <textarea class="f-input" rows="4" placeholder="Cuéntanos más sobre tus necesidades, uso que le darás al equipo o cualquier duda que tengas..."></textarea>
+      </div>
+      <button class="f-submit">Enviar solicitud &rarr;</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="logo-text">Tech<span>Store</span></span>
+      <p>La tienda de tecnología más confiable del Perú. Distribuidores autorizados con más de 12 años llevando lo mejor de la tecnología a peruanos de todo el país.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Productos</h4>
+      <ul>
+        <li><a href="#">Laptops</a></li>
+        <li><a href="#">MacBooks</a></li>
+        <li><a href="#">Desktops</a></li>
+        <li><a href="#">Workstations</a></li>
+        <li><a href="#">Accesorios</a></li>
+        <li><a href="#">Gaming</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href="#">Sobre nosotros</a></li>
+        <li><a href="#">Trabaja con nosotros</a></li>
+        <li><a href="#">Blog tecnológico</a></li>
+        <li><a href="#">Ventas corporativas</a></li>
+        <li><a href="#">Prensa</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Soporte</h4>
+      <ul>
+        <li><a href="#">Centro de ayuda</a></li>
+        <li><a href="#">Garantías</a></li>
+        <li><a href="#">Devoluciones</a></li>
+        <li><a href="#">Estado del pedido</a></li>
+        <li><a href="#">Libro de reclamaciones</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2026 TechStore Perú S.A.C. &middot; RUC 20123456789 &middot; Todos los derechos reservados</div>
+    <div class="footer-links">
+      <a href="#">Privacidad</a>
+      <a href="#">Términos y condiciones</a>
+      <a href="#">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Countdown timer
+(function(){
+  var end = new Date();
+  end.setDate(end.getDate() + 2);
+  end.setHours(end.getHours() + 14, end.getMinutes() + 38, 0, 0);
+  function pad(n){return n<10?'0'+n:n}
+  function tick(){
+    var diff = end - Date.now();
+    if(diff <= 0){diff=0}
+    var d = Math.floor(diff/86400000);
+    var h = Math.floor((diff%86400000)/3600000);
+    var m = Math.floor((diff%3600000)/60000);
+    var s = Math.floor((diff%60000)/1000);
+    document.getElementById('days').textContent = pad(d);
+    document.getElementById('hours').textContent = pad(h);
+    document.getElementById('mins').textContent = pad(m);
+    document.getElementById('secs').textContent = pad(s);
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
+
+</body>
+</html>

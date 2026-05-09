@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Tech - Soluciones Informáticas Pro</title>
+    <style>
+        /* RESET Y ESTILOS BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            color: #e0e0e0;
+            line-height: 1.6;
+            background-color: #0a0b10;
+        }
+
+        /* ENCABEZADO */
+        header {
+            background: rgba(15, 17, 26, 0.95);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 8%;
+            border-bottom: 2px solid #00d4ff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 900;
+            color: #00d4ff;
+            letter-spacing: 1px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #b0b0b0;
+            margin-left: 30px;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        nav a:hover { color: #00d4ff; }
+
+        /* SECCIÓN HERO */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 68px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: 800;
+            background: linear-gradient(to right, #00d4ff, #0055ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-cita {
+            background-color: #00d4ff;
+            color: #0a0b10;
+            padding: 18px 45px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 800;
+            font-size: 16px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+
+        /* CONTENEDOR GENERAL */
+        .container { padding: 60px 8%; }
+
+        /* SECCIÓN DE PRODUCTOS */
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #ffffff;
+        }
+
+        .destinos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .card {
+            background: #151921;
+            border: 1px solid #252a35;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .card:hover { border-color: #00d4ff; transform: translateY(-5px); }
+
+        .card-img { height: 230px; background-size: cover; background-position: center; }
+
+        .card-body { padding: 25px; }
+
+        .card-body h3 { color: #ffffff; margin-bottom: 10px; }
+
+        /* SECCIÓN MIXTA: POR QUÉ ELEGIRNOS + RESEÑAS */
+        .info-reviews {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 80px;
+            flex-wrap: wrap;
+        }
+
+        .why-us {
+            flex: 2;
+            background: #11141d;
+            padding: 40px;
+            border-radius: 15px;
+        }
+
+        .article {
+            margin-bottom: 30px;
+            padding-left: 20px;
+            border-left: 2px solid #00d4ff;
+        }
+
+        .article h4 { color: #ffffff; margin-bottom: 5px; }
+
+        .reviews {
+            flex: 1.2;
+            background: linear-gradient(145deg, #002244, #00d4ff);
+            color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+        }
+
+        .testimonial {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .testimonial span { display: block; margin-top: 10px; font-weight: 800; text-transform: uppercase; font-size: 11px; }
+
+        /* SECCIÓN DE PRECIOS Y GAMAS */
+        .pricing-section {
+            background: #11141d;
+            border-radius: 15px;
+            padding: 50px;
+            display: flex;
+            gap: 50px;
+            align-items: center;
+            border: 1px solid #252a35;
+        }
+
+        .gamas-info { flex: 1.5; }
+
+        .gama-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+        }
+
+        .gama-item h4 { color: #00d4ff; margin-bottom: 5px; }
+
+        .gama-item p { font-size: 13px; color: #94a3b8; }
+
+        /* GRÁFICO DE CÍRCULO */
+        .price-circle-container { flex: 1; display: flex; justify-content: center; }
+
+        .quadrant-circle {
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            position: relative;
+            border: 4px solid #1a1e26;
+            background: conic-gradient(#1a1e26 0deg 90deg, #151921 90deg 180deg, #1a1e26 180deg 270deg, #151921 270deg 360deg);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .quadrant-circle::before { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background: #00d4ff; z-index: 2; }
+        .quadrant-circle::after { content: ''; position: absolute; left: 50%; top: 0; width: 2px; height: 100%; background: #00d4ff; z-index: 2; }
+
+        .price-tag {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 3;
+        }
+
+        .q2 { top: 0; left: 0; } .q1 { top: 0; right: 0; }
+        .q3 { bottom: 0; left: 0; } .q4 { bottom: 0; right: 0; }
+
+        .price-tag b { font-size: 20px; color: #fff; }
+        .price-tag span { font-size: 10px; color: #00d4ff; text-transform: uppercase; }
+
+        /* FOOTER */
+        footer {
+            background: #050608;
+            color: white;
+            padding: 80px 8%;
+            text-align: center;
+            border-top: 1px solid #1a1e26;
+            margin-top: 80px;
+        }
+
+        .footer-grid { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 30px; margin-top: 30px; }
+
+        .contact-item h5 { color: #00d4ff; margin-bottom: 10px; text-transform: uppercase; }
+
+        @media (max-width: 992px) {
+            .pricing-section, .info-reviews { flex-direction: column; }
+            .hero h1 { font-size: 45px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">NEXUS TECH</div>
+        <nav>
+            <a href="#">Inicio</a>
+            <a href="#">Catálogo</a>
+            <a href="#">Soporte</a>
+            <a href="#">Contacto</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>IMPULSA TU FUTURO</h1>
+        <a href="#" class="btn-cita">Botón cita</a>
+    </section>
+
+    <div class="container">
+        <!-- SECCIÓN 1: PRODUCTOS PRINCIPALES -->
+        <h2 class="section-title">Hardware de <b>Nueva Generación</b></h2>
+        <div class="destinos-grid">
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=2070&auto=format&fit=crop');"></div>
+                <div class="card-body">
+                    <h3>Estaciones de Trabajo</h3>
+                    <p>Potencia absoluta para renderizado 3D y edición de video profesional.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');"></div>
+                <div class="card-body">
+                    <h3>Equipos para Gaming</h3>
+                    <p>Sistemas optimizados para una experiencia fluida en 4K y Ray Tracing.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1591405351990-4726e331f141?q=80&w=2070&auto=format&fit=crop');"></div>
+                <div class="card-body">
+                    <h3>Componentes Avanzados</h3>
+                    <p>Procesadores de última generación y memorias DDR5 de alta frecuencia.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: INFORMACIÓN Y RESEÑAS -->
+        <div class="info-reviews">
+            <div class="why-us">
+                <h2 style="margin-bottom: 30px;">¿Por qué Nexus Tech?</h2>
+                <div class="article">
+                    <h4>Ingeniería de Precisión</h4>
+                    <p>Montaje artesanal con gestión térmica optimizada en cada equipo ensamblado.</p>
+                </div>
+                <div class="article">
+                    <h4>Rendimiento Certificado</h4>
+                    <p>48 horas de pruebas de estrés antes de la entrega para garantizar estabilidad.</p>
+                </div>
+                <div class="article">
+                    <h4>Asistencia Experta</h4>
+                    <p>Ingenieros de sistemas listos para asesorarte en tu configuración ideal.</p>
+                </div>
+            </div>
+
+            <div class="reviews">
+                <h2 style="margin-bottom: 30px;">User Feedback</h2>
+                <div class="testimonial">
+                    "Mi flujo de trabajo ha mejorado un 200%. El servicio es excepcional."
+                    <span>— Carlos V. (Diseñador 3D)</span>
+                </div>
+                <div class="testimonial">
+                    "El PC más potente y silencioso que he tenido. Estética impresionante."
+                    <span>— Marina P. (Jugadora Pro)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 3: GAMAS Y PRECIOS (NUEVA) -->
+        <h2 class="section-title">Estructura de <b>Gamas y Precios</b></h2>
+        <div class="pricing-section">
+            <div class="gamas-info">
+                <div class="gama-item">
+                    <h4>Gama Inicial</h4>
+                    <p>Componentes esenciales para oficina y estudio avanzado. Estabilidad garantizada.</p>
+                </div>
+                <div class="gama-item">
+                    <h4>Gama Media</h4>
+                    <p>El equilibrio perfecto para gaming 1080p y diseño gráfico profesional.</p>
+                </div>
+                <div class="gama-item">
+                    <h4>Gama Alta</h4>
+                    <p>Potencia para creadores de contenido y gaming competitivo en 2K/4K.</p>
+                </div>
+                <div class="gama-item">
+                    <h4>Gama Ultra</h4>
+                    <p>Lo último en tecnología para IA, ciencia de datos y renderizado pesado.</p>
+                </div>
+            </div>
+
+            <div class="price-circle-container">
+                <div class="quadrant-circle">
+                    <div class="price-tag q2"><span>Inicial</span><b>$450+</b></div>
+                    <div class="price-tag q1"><span>Media</span><b>$850+</b></div>
+                    <div class="price-tag q3"><span>Alta</span><b>$1,500+</b></div>
+                    <div class="price-tag q4"><span>Ultra</span><b>$3,200+</b></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="contact-item">
+                <h5>Ubicación</h5>
+                <p>Centro Tecnológico Silicon, Lima - Perú</p>
+            </div>
+            <div class="contact-item">
+                <h5>Teléfono</h5>
+                <p>+51 01 500-TECH</p>
+            </div>
+            <div class="contact-item">
+                <h5>Email</h5>
+                <p>contacto@nexustech.pe</p>
+            </div>
+        </div>
+        <p style="margin-top: 50px; font-size: 11px; opacity: 0.4;">&copy; 2026 NEXUS TECH INDUSTRIES.</p>
+    </footer>
+
+</body>
+</html>
