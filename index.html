@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sabor Norteño – Restaurante Peruano en Tacna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    /* ===== RESET & VARIABLES ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --naranja:     #D4600A;
+      --naranja-l:   #F28A30;
+      --crema:       #FAF3E0;
+      --crema-oscura:#EFE0C4;
+      --tierra:      #7B4F29;
+      --tierra-l:    #A0693A;
+      --verde:       #4A6741;
+      --blanco:      #FFFDF7;
+      --gris-texto:  #3A2A1A;
+      --sombra:      rgba(60,30,0,.15);
+      --trans: .35s cubic-bezier(.4,0,.2,1);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--blanco);
+      color: var(--gris-texto);
+      overflow-x: hidden;
+    }
+    img { display: block; width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--crema); }
+    ::-webkit-scrollbar-thumb { background: var(--naranja); border-radius: 4px; }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 72px;
+      background: transparent;
+      transition: background var(--trans), box-shadow var(--trans);
+    }
+    nav.scrolled {
+      background: var(--blanco);
+      box-shadow: 0 2px 20px var(--sombra);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem; font-weight: 900;
+      color: var(--blanco);
+      transition: color var(--trans);
+    }
+    nav.scrolled .nav-logo { color: var(--tierra); }
+    .nav-logo .logo-icon {
+      width: 44px; height: 44px;
+      background: var(--naranja);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; color: #fff;
+      box-shadow: 0 4px 12px rgba(212,96,10,.4);
+    }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      font-size: .88rem; letter-spacing: .08em; text-transform: uppercase;
+      font-weight: 700; color: var(--blanco);
+      position: relative; padding-bottom: 3px;
+      transition: color var(--trans);
+    }
+    nav.scrolled .nav-links a { color: var(--gris-texto); }
+    .nav-links a::after {
+      content:''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px; background: var(--naranja);
+      transition: width var(--trans);
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a:hover { color: var(--naranja) !important; }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      width: 26px; height: 2px;
+      background: var(--blanco);
+      border-radius: 2px; transition: var(--trans);
+    }
+    nav.scrolled .hamburger span { background: var(--tierra); }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ===== HERO ===== */
+    #inicio {
+      position: relative;
+      min-height: 100svh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        linear-gradient(160deg, rgba(60,20,0,.72) 0%, rgba(123,79,41,.55) 60%, rgba(212,96,10,.3) 100%),
+        url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=1400&q=80') center/cover no-repeat;
+      transform: scale(1.05);
+      animation: heroZoom 14s ease-in-out infinite alternate;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.05); }
+      to   { transform: scale(1.12); }
+    }
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: radial-gradient(ellipse at center bottom, rgba(212,96,10,.18) 0%, transparent 70%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; color: #fff;
+      padding: 2rem 1.5rem;
+      animation: fadeUp .9s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform: translateY(30px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+    .hero-badge {
+      display: inline-block;
+      font-size: .75rem; letter-spacing: .2em; text-transform: uppercase;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.35);
+      color: #fff;
+      padding: .35rem 1.1rem; border-radius: 30px;
+      margin-bottom: 1.4rem;
+      backdrop-filter: blur(6px);
+      animation: fadeUp .9s .2s ease both;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 900; line-height: 1.05;
+      text-shadow: 0 4px 30px rgba(0,0,0,.4);
+      animation: fadeUp .9s .35s ease both;
+    }
+    .hero-title em { color: var(--naranja-l); font-style: normal; }
+    .hero-sub {
+      margin: 1.2rem auto 2.4rem;
+      max-width: 520px;
+      font-size: 1.05rem; font-weight: 300; line-height: 1.7;
+      opacity: .9;
+      animation: fadeUp .9s .5s ease both;
+    }
+    .btn-hero {
+      display: inline-flex; align-items: center; gap: .55rem;
+      background: var(--naranja);
+      color: #fff; font-weight: 700; font-size: .95rem;
+      padding: .9rem 2.2rem; border-radius: 50px;
+      box-shadow: 0 8px 28px rgba(212,96,10,.5);
+      transition: transform var(--trans), box-shadow var(--trans), background var(--trans);
+      animation: fadeUp .9s .65s ease both;
+    }
+    .btn-hero:hover {
+      background: var(--naranja-l);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 36px rgba(212,96,10,.55);
+    }
+    .hero-scroll {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center;
+      color: rgba(255,255,255,.7); font-size: .72rem; letter-spacing: .15em; text-transform: uppercase;
+      animation: bounceY 2.2s ease-in-out infinite;
+    }
+    .hero-scroll i { font-size: 1.2rem; margin-top: .4rem; }
+    @keyframes bounceY {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ===== SECTION COMMONS ===== */
+    section { padding: 100px 5%; }
+    .sec-label {
+      display: inline-block;
+      font-size: .72rem; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--naranja); font-weight: 700;
+      margin-bottom: .75rem;
+    }
+    .sec-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      font-weight: 900; line-height: 1.15;
+      color: var(--tierra);
+      margin-bottom: 1rem;
+    }
+    .sec-sep {
+      width: 60px; height: 4px;
+      background: linear-gradient(90deg, var(--naranja), var(--naranja-l));
+      border-radius: 2px; margin: 1rem 0 1.5rem;
+    }
+    .sec-sep.center { margin: 1rem auto 1.5rem; }
+
+    /* ===== MENÚ ===== */
+    #menu { background: var(--crema); }
+    .menu-head { text-align: center; margin-bottom: 3.5rem; }
+    .dishes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 2rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .dish-card {
+      background: var(--blanco);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 6px 28px var(--sombra);
+      transition: transform var(--trans), box-shadow var(--trans);
+      opacity: 0; transform: translateY(28px);
+    }
+    .dish-card.visible {
+      animation: cardIn .6s ease forwards;
+    }
+    @keyframes cardIn {
+      to { opacity:1; transform: translateY(0); }
+    }
+    .dish-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 48px rgba(123,79,41,.22);
+    }
+    .dish-img-wrap {
+      height: 210px; overflow: hidden; position: relative;
+    }
+    .dish-img-wrap img {
+      height: 100%; object-fit: cover;
+      transition: transform .5s ease;
+    }
+    .dish-card:hover .dish-img-wrap img { transform: scale(1.08); }
+    .dish-badge {
+      position: absolute; top: 14px; left: 14px;
+      background: var(--naranja); color: #fff;
+      font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      padding: .28rem .75rem; border-radius: 20px;
+    }
+    .dish-body { padding: 1.4rem 1.6rem 1.7rem; }
+    .dish-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.22rem; font-weight: 700; color: var(--tierra);
+      margin-bottom: .4rem;
+    }
+    .dish-desc { font-size: .87rem; line-height: 1.65; color: #6a4a2e; margin-bottom: 1.1rem; }
+    .dish-footer {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .dish-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 900; color: var(--naranja);
+    }
+    .dish-price span { font-size: .9rem; font-weight: 400; color: var(--tierra-l); }
+    .btn-pedir {
+      background: var(--tierra);
+      color: #fff; font-size: .8rem; font-weight: 700;
+      padding: .45rem 1.15rem; border-radius: 30px;
+      border: none; cursor: pointer;
+      transition: background var(--trans), transform var(--trans);
+    }
+    .btn-pedir:hover { background: var(--naranja); transform: scale(1.04); }
+
+    /* ===== NOSOTROS ===== */
+    #nosotros {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+      background: var(--blanco);
+    }
+    .nosotros-imgs {
+      position: relative; height: 500px;
+    }
+    .nosotros-img-main {
+      position: absolute; top: 0; left: 0;
+      width: 75%; height: 80%;
+      border-radius: 24px; overflow: hidden;
+      box-shadow: 0 16px 48px var(--sombra);
+    }
+    .nosotros-img-sec {
+      position: absolute; bottom: 0; right: 0;
+      width: 55%; height: 55%;
+      border-radius: 24px; overflow: hidden;
+      box-shadow: 0 12px 36px var(--sombra);
+      border: 5px solid var(--blanco);
+    }
+    .nosotros-img-main img, .nosotros-img-sec img { height: 100%; object-fit: cover; }
+    .experiencia-badge {
+      position: absolute; top: 50%; left: 55%;
+      transform: translate(-50%,-50%);
+      background: var(--naranja);
+      color: #fff; border-radius: 50%;
+      width: 90px; height: 90px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      box-shadow: 0 8px 24px rgba(212,96,10,.45);
+      z-index: 5;
+    }
+    .experiencia-badge strong { font-size: 1.7rem; line-height: 1; }
+    .experiencia-badge small { font-size: .58rem; letter-spacing: .08em; text-transform: uppercase; }
+    .nosotros-text p {
+      font-size: 1rem; line-height: 1.8; color: #5a3e26; margin-bottom: 1.2rem;
+    }
+    .nosotros-valores {
+      display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.5rem;
+    }
+    .valor {
+      display: flex; align-items: flex-start; gap: .75rem;
+    }
+    .valor-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--crema-oscura);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; color: var(--naranja); flex-shrink: 0;
+    }
+    .valor-text strong { display: block; font-size: .9rem; color: var(--tierra); margin-bottom: .15rem; }
+    .valor-text span { font-size: .82rem; color: #7a5a3a; }
+
+    /* ===== HORARIO & CONTACTO ===== */
+    #contacto { background: var(--crema); }
+    .contacto-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 3.5rem; max-width: 1100px; margin: 0 auto; align-items: start;
+    }
+    .horario-card, .info-card {
+      background: var(--blanco); border-radius: 20px;
+      padding: 2.2rem; box-shadow: 0 6px 28px var(--sombra);
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem; font-weight: 700; color: var(--tierra);
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .card-title i { color: var(--naranja); font-size: 1.1rem; }
+    .horario-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .75rem 0;
+      border-bottom: 1px solid var(--crema-oscura);
+      font-size: .92rem;
+    }
+    .horario-row:last-child { border-bottom: none; }
+    .horario-row .dia { font-weight: 700; color: var(--tierra); }
+    .horario-row .hora { color: var(--naranja-l); font-weight: 600; }
+    .horario-row .cerrado { color: #bbb; }
+    .info-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: .9rem 0;
+      border-bottom: 1px solid var(--crema-oscura);
+      font-size: .92rem;
+    }
+    .info-item:last-child { border-bottom: none; }
+    .info-item i { color: var(--naranja); width: 20px; margin-top: 2px; }
+    .info-item p { color: #5a3e26; line-height: 1.6; }
+    .info-item a { color: var(--naranja); }
+    .map-wrap {
+      grid-column: 1 / -1;
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 6px 28px var(--sombra);
+      height: 380px;
+    }
+    .map-wrap iframe { width: 100%; height: 100%; border: none; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--tierra);
+      color: rgba(255,255,255,.75);
+      text-align: center;
+      padding: 3rem 5% 2rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 900; color: #fff;
+      margin-bottom: .4rem;
+    }
+    .footer-tagline { font-size: .85rem; margin-bottom: 2rem; }
+    .social-links {
+      display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem;
+    }
+    .social-link {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,.12);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1.1rem;
+      transition: background var(--trans), transform var(--trans);
+    }
+    .social-link:hover { background: var(--naranja); transform: translateY(-3px); }
+    .footer-links {
+      display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;
+      list-style: none; margin-bottom: 2rem;
+      font-size: .82rem; letter-spacing: .06em;
+    }
+    .footer-links a { transition: color var(--trans); }
+    .footer-links a:hover { color: var(--naranja-l); }
+    .footer-copy {
+      font-size: .78rem; opacity: .5;
+      border-top: 1px solid rgba(255,255,255,.12); padding-top: 1.5rem;
+    }
+
+    /* ===== MOBILE MENU ===== */
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links {
+        position: fixed; top: 72px; left: 0; right: 0;
+        background: var(--blanco);
+        flex-direction: column; align-items: center; gap: 0;
+        max-height: 0; overflow: hidden;
+        transition: max-height .4s ease, box-shadow .4s ease;
+        box-shadow: none;
+      }
+      .nav-links.open {
+        max-height: 400px;
+        box-shadow: 0 12px 32px var(--sombra);
+      }
+      .nav-links li { width: 100%; text-align: center; }
+      .nav-links a {
+        color: var(--gris-texto) !important;
+        display: block; padding: 1.1rem 2rem;
+        border-bottom: 1px solid var(--crema-oscura);
+      }
+      #nosotros {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .nosotros-imgs { height: 360px; }
+      .contacto-grid { grid-template-columns: 1fr; }
+      .map-wrap { grid-column: auto; }
+    }
+    @media (max-width: 500px) {
+      section { padding: 70px 5%; }
+    }
+
+    /* ===== REVEAL ANIMATION ===== */
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+  <a href="#inicio" class="nav-logo">
+    <div class="logo-icon"><i class="fa-solid fa-pepper-hot"></i></div>
+    Sabor Norteño
+  </a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#menu">Carta</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-badge"><i class="fa-solid fa-star"></i> &nbsp;Cocina Tradicional Peruana · Tacna</span>
+    <h1 class="hero-title">El auténtico<br><em>Sabor del Norte</em></h1>
+    <p class="hero-sub">Platos elaborados con ingredientes frescos, recetas de familia y el alma vibrante de la gastronomía peruana.</p>
+    <a href="#menu" class="btn-hero">
+      <i class="fa-solid fa-book-open"></i> Ver la Carta
+    </a>
+  </div>
+  <div class="hero-scroll">
+    Descubrir <i class="fa-solid fa-chevron-down"></i>
+  </div>
+</section>
+
+<!-- ===== MENÚ ===== -->
+<section id="menu">
+  <div class="menu-head reveal">
+    <span class="sec-label">Nuestra Carta</span>
+    <h2 class="sec-title">Platos que enamoran</h2>
+    <div class="sec-sep center"></div>
+    <p style="color:#7a5a3a;max-width:520px;margin:0 auto;font-size:.97rem;line-height:1.7;">
+      Seleccionamos los sabores más representativos del Perú, preparados cada día con pasión y productos de temporada.
+    </p>
+  </div>
+  <div class="dishes-grid">
+
+    <div class="dish-card">
+      <div class="dish-img-wrap">
+        <img src="https://images.unsplash.com/photo-1603085157069-97218b5fc5ea?w=600&q=80" alt="Ceviche Clásico" loading="lazy"/>
+        <span class="dish-badge">🔥 Estrella</span>
+      </div>
+      <div class="dish-body">
+        <div class="dish-name">Ceviche Clásico</div>
+        <p class="dish-desc">Filete de corvina fresca en leche de tigre, cebolla morada, ají limo y choclo peruano. El sabor del mar en cada bocado.</p>
+        <div class="dish-footer">
+          <div class="dish-price">S/ 38 <span>/ porción</span></div>
+          <button class="btn-pedir">Pedir &nbsp;<i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dish-card">
+      <div class="dish-img-wrap">
+        <img src="https://images.unsplash.com/photo-1599021456807-47ba26adfcd5?w=600&q=80" alt="Lomo Saltado" loading="lazy"/>
+        <span class="dish-badge">⭐ Popular</span>
+      </div>
+      <div class="dish-body">
+        <div class="dish-name">Lomo Saltado</div>
+        <p class="dish-desc">Tiras de lomo fino salteadas a fuego vivo con tomate, cebolla, sillao y ají amarillo. Servido con arroz y papas fritas.</p>
+        <div class="dish-footer">
+          <div class="dish-price">S/ 45 <span>/ porción</span></div>
+          <button class="btn-pedir">Pedir &nbsp;<i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dish-card">
+      <div class="dish-img-wrap">
+        <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&q=80" alt="Ají de Gallina" loading="lazy"/>
+      </div>
+      <div class="dish-body">
+        <div class="dish-name">Ají de Gallina</div>
+        <p class="dish-desc">Pollo desmenuzado en cremosa salsa de ají amarillo, nueces y pan remojado. Acompañado de arroz blanco y huevo sancochado.</p>
+        <div class="dish-footer">
+          <div class="dish-price">S/ 32 <span>/ porción</span></div>
+          <button class="btn-pedir">Pedir &nbsp;<i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dish-card">
+      <div class="dish-img-wrap">
+        <img src="https://images.unsplash.com/photo-1607098665874-fd193397547b?w=600&q=80" alt="Arroz con Leche" loading="lazy"/>
+        <span class="dish-badge">🍮 Postre</span>
+      </div>
+      <div class="dish-body">
+        <div class="dish-name">Arroz con Leche</div>
+        <p class="dish-desc">Receta tradicional con canela, leche evaporada y un toque de ralladura de limón. Suave, cremoso y reconfortante.</p>
+        <div class="dish-footer">
+          <div class="dish-price">S/ 14 <span>/ porción</span></div>
+          <button class="btn-pedir">Pedir &nbsp;<i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dish-card">
+      <div class="dish-img-wrap">
+        <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&q=80" alt="Causa Limeña" loading="lazy"/>
+        <span class="dish-badge">🌿 Vegetal</span>
+      </div>
+      <div class="dish-body">
+        <div class="dish-name">Causa Limeña</div>
+        <p class="dish-desc">Capas de papa amarilla con ají amarillo, rellena de pollo desmenuzado con mayonesa y aceitunas negras. Fresca y elegante.</p>
+        <div class="dish-footer">
+          <div class="dish-price">S/ 28 <span>/ porción</span></div>
+          <button class="btn-pedir">Pedir &nbsp;<i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dish-card">
+      <div class="dish-img-wrap">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" alt="Anticuchos" loading="lazy"/>
+        <span class="dish-badge">🔥 A la parrilla</span>
+      </div>
+      <div class="dish-body">
+        <div class="dish-name">Anticuchos de Corazón</div>
+        <p class="dish-desc">Brochetas de corazón de res marinadas en ají panca, vinagre y especias, asadas al carbón. Tradición pura de las calles peruanas.</p>
+        <div class="dish-footer">
+          <div class="dish-price">S/ 22 <span>/ brocheta</span></div>
+          <button class="btn-pedir">Pedir &nbsp;<i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== NOSOTROS ===== -->
+<section id="nosotros">
+  <div class="nosotros-imgs reveal">
+    <div class="nosotros-img-main">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80" alt="Restaurante interior" loading="lazy"/>
+    </div>
+    <div class="nosotros-img-sec">
+      <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="Chef cocinando" loading="lazy"/>
+    </div>
+    <div class="experiencia-badge">
+      <strong>12+</strong>
+      <small>Años de<br>sabor</small>
+    </div>
+  </div>
+  <div class="nosotros-text reveal">
+    <span class="sec-label">Quiénes somos</span>
+    <h2 class="sec-title">Una historia escrita<br>con sazón</h2>
+    <div class="sec-sep"></div>
+    <p>Desde el año 2012, <strong>Sabor Norteño</strong> ha sido el punto de encuentro de familias tacneñas que buscan los sabores auténticos del norte del Perú. Nacimos del sueño de la familia Quispe: llevar a cada mesa la herencia culinaria que sus abuelos les enseñaron.</p>
+    <p>Nuestro chef, con más de 20 años de experiencia, selecciona cada ingrediente con cuidado, garantizando frescura y calidad en cada plato. Porque para nosotros, cocinar es un acto de amor.</p>
+    <div class="nosotros-valores">
+      <div class="valor">
+        <div class="valor-icon"><i class="fa-solid fa-leaf"></i></div>
+        <div class="valor-text">
+          <strong>Ingredientes frescos</strong>
+          <span>Productos locales y de temporada</span>
+        </div>
+      </div>
+      <div class="valor">
+        <div class="valor-icon"><i class="fa-solid fa-heart"></i></div>
+        <div class="valor-text">
+          <strong>Recetas familiares</strong>
+          <span>Tradición de generaciones</span>
+        </div>
+      </div>
+      <div class="valor">
+        <div class="valor-icon"><i class="fa-solid fa-award"></i></div>
+        <div class="valor-text">
+          <strong>Calidad premium</strong>
+          <span>Estándares de excelencia siempre</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACTO ===== -->
+<section id="contacto">
+  <div style="text-align:center;margin-bottom:3rem;" class="reveal">
+    <span class="sec-label">Encuéntranos</span>
+    <h2 class="sec-title">Horarios & Contacto</h2>
+    <div class="sec-sep center"></div>
+  </div>
+  <div class="contacto-grid">
+
+    <div class="horario-card reveal">
+      <div class="card-title"><i class="fa-regular fa-clock"></i> Horario de Atención</div>
+      <div class="horario-row">
+        <span class="dia">Lunes – Martes</span>
+        <span class="cerrado">Cerrado</span>
+      </div>
+      <div class="horario-row">
+        <span class="dia">Miércoles – Jueves</span>
+        <span class="hora">12:00 – 21:00</span>
+      </div>
+      <div class="horario-row">
+        <span class="dia">Viernes – Sábado</span>
+        <span class="hora">11:30 – 22:30</span>
+      </div>
+      <div class="horario-row">
+        <span class="dia">Domingo</span>
+        <span class="hora">11:30 – 20:00</span>
+      </div>
+      <div style="margin-top:1.5rem;background:var(--crema);border-radius:12px;padding:1rem 1.2rem;font-size:.85rem;color:#7a5a3a;line-height:1.6;">
+        <i class="fa-solid fa-circle-info" style="color:var(--naranja);margin-right:.4rem;"></i>
+        Para reservas de grupos (+8 personas) te pedimos llamarnos con anticipación.
+      </div>
+    </div>
+
+    <div class="info-card reveal">
+      <div class="card-title"><i class="fa-solid fa-address-book"></i> Información de Contacto</div>
+      <div class="info-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <p>Av. Bolognesi 345, Tacna – Perú</p>
+      </div>
+      <div class="info-item">
+        <i class="fa-solid fa-phone"></i>
+        <p><a href="tel:+51952345678">+51 952 345 678</a></p>
+      </div>
+      <div class="info-item">
+        <i class="fa-brands fa-whatsapp"></i>
+        <p><a href="https://wa.me/51952345678" target="_blank">Escribir por WhatsApp</a></p>
+      </div>
+      <div class="info-item">
+        <i class="fa-solid fa-envelope"></i>
+        <p><a href="mailto:hola@sabornorteno.pe">hola@sabornorteno.pe</a></p>
+      </div>
+      <div class="info-item">
+        <i class="fa-solid fa-globe"></i>
+        <p>www.sabornorteno.pe</p>
+      </div>
+    </div>
+
+    <div class="map-wrap reveal">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3840.1234567890!2d-70.01234567890!3d-18.01234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9153c66d07c6ef5b%3A0x5e1e4e50e3a3e3d0!2sTacna%2C%20Per%C3%BA!5e0!3m2!1ses!2spe!4v1700000000000!5m2!1ses!2spe"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="Ubicación Sabor Norteño – Tacna">
+      </iframe>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-logo">Sabor Norteño</div>
+  <div class="footer-tagline">El corazón de la cocina peruana en Tacna</div>
+  <div class="social-links">
+    <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+    <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    <a href="#" class="social-link" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+    <a href="#" class="social-link" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+    <a href="https://wa.me/51952345678" class="social-link" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#menu">Carta</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <div class="footer-copy">
+    © 2025 Sabor Norteño · Tacna, Perú · Todos los derechos reservados
+  </div>
+</footer>
+
+<script>
+  /* ===== NAVBAR SCROLL ===== */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* ===== HAMBURGER ===== */
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('nav-links');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+
+  /* ===== INTERSECTION OBSERVER – REVEAL ===== */
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => revealObs.observe(el));
+
+  /* ===== DISH CARDS STAGGERED ===== */
+  const cards = document.querySelectorAll('.dish-card');
+  const cardObs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 110);
+        cardObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  cards.forEach(c => cardObs.observe(c));
+
+  /* ===== SMOOTH ACTIVE NAV ===== */
+  const sections = document.querySelectorAll('section[id]');
+  const navAs = document.querySelectorAll('.nav-links a');
+  const activeObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navAs.forEach(a => a.style.color = '');
+        const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+        if (active) active.style.color = 'var(--naranja)';
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => activeObs.observe(s));
+
+  /* ===== PEDIR BUTTON TOAST ===== */
+  document.querySelectorAll('.btn-pedir').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const name = btn.closest('.dish-card').querySelector('.dish-name').textContent;
+      showToast(`¡${name} agregado! 🍽️`);
+    });
+  });
+
+  function showToast(msg) {
+    const t = document.createElement('div');
+    t.textContent = msg;
+    Object.assign(t.style, {
+      position: 'fixed', bottom: '2rem', left: '50%',
+      transform: 'translateX(-50%) translateY(20px)',
+      background: 'var(--tierra)', color: '#fff',
+      padding: '.75rem 1.6rem', borderRadius: '50px',
+      fontSize: '.9rem', fontWeight: '700',
+      boxShadow: '0 8px 28px rgba(0,0,0,.25)',
+      zIndex: '9999', opacity: '0',
+      transition: 'opacity .3s ease, transform .3s ease',
+      whiteSpace: 'nowrap'
+    });
+    document.body.appendChild(t);
+    requestAnimationFrame(() => {
+      t.style.opacity = '1';
+      t.style.transform = 'translateX(-50%) translateY(0)';
+    });
+    setTimeout(() => {
+      t.style.opacity = '0';
+      t.style.transform = 'translateX(-50%) translateY(20px)';
+      setTimeout(() => t.remove(), 300);
+    }, 2200);
+  }
+</script>
+</body>
+</html>
